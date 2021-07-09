@@ -1,0 +1,133 @@
+{
+    "edges": [
+        {
+            "id": "12125_e1",
+            "source_id": "12125_n_s1",
+            "target_id": "12125_n_a1"
+        },
+        {
+            "id": "12125_e2",
+            "source_id": "12125_n_a2",
+            "target_id": "12125_n_s1"
+        },
+        {
+            "id": "12125_e3",
+            "source_id": "12125_n_s2",
+            "target_id": "12125_n_a2"
+        },
+        {
+            "id": "12125_e4",
+            "source_id": "12125_n_a3",
+            "target_id": "12125_n_s2"
+        },
+        {
+            "id": "12125_e5",
+            "source_id": "12125_n_a4",
+            "target_id": "12125_n_s1"
+        },
+        {
+            "id": "12125_e6",
+            "source_id": "12125_n_s3",
+            "target_id": "12125_n_a4"
+        },
+        {
+            "id": "12125_e7",
+            "source_id": "12125_n_a5",
+            "target_id": "12125_n_s3"
+        },
+        {
+            "id": "12125_e8",
+            "source_id": "12125_n_a6",
+            "target_id": "12125_n_s2"
+        },
+        {
+            "id": "12125_e8",
+            "source_id": "12125_n_a7",
+            "target_id": "12125_n_s2"
+        }
+    ],
+    "metadata": {
+        "core": {
+            "analyst_email": "connor.ness@outlook.com",
+            "analyst_name": "Connor Ness",
+            "created": "2021-06-28 15:52:18.443063",
+            "description": " ",
+            "edited": "2021-06-28 15:52:18.443063",
+            "id": "2021-06-28 15:52:18.443063-pet12125",
+            "notes": " ",
+            "title": "pet12125",
+            "version": "0.1"
+        }
+    },
+    "nodes": [
+        {
+            "id": "12125_n_a1",
+            "metadata": {},
+            "sources": [],
+            "text": "Having owned both cats and dogs, I can say that supporting a dog is more expensive",
+            "type": "atom"
+        },
+        {
+            "id": "12125_n_s1",
+            "metadata": {},
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12125_n_a2",
+            "metadata": {},
+            "sources": [],
+            "text": "Most (not all) dogs are bigger and eat more",
+            "type": "atom"
+        },
+        {
+            "id": "12125_n_s2",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12125_n_a3",
+            "metadata": {},
+            "sources": [],
+            "text": "they eat less",
+            "type": "atom"
+        },
+        {
+            "id": "12125_n_a4",
+            "metadata": {},
+            "sources": [],
+            "text": "Cats tend to remain pretty healthy until they get sick, and then they go very fast. They dont run up vet bills that much",
+            "type": "atom"
+        },
+        {
+            "id": "12125_n_s3",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12125_n_a5",
+            "metadata": {},
+            "sources": [],
+            "text": "Vet bills are lower",
+            "type": "atom"
+        },
+        {
+            "id": "12125_n_a6",
+            "metadata": {},
+            "sources": [],
+            "text": "In all respects, cats cost less",
+            "type": "atom"
+        },
+        {
+            "id": "12125_n_a7",
+            "metadata": {},
+            "sources": [],
+            "text": "fur and claw tending equipment is cheaper",
+            "type": "atom"
+        }
+    ]
+}

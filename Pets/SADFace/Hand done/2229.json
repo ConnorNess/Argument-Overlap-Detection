@@ -1,0 +1,73 @@
+{
+    "edges": [
+        {
+            "id": "2229_e1",
+            "source_id": "2229_n_s1",
+            "target_id": "2229_n_a1"
+        },
+        {
+            "id": "2229_e2",
+            "source_id": "2229_n_a2",
+            "target_id": "2229_n_s1"
+        },
+        {
+            "id": "2229_e3",
+            "source_id": "2229_n_a3",
+            "target_id": "2229_n_s1"
+        },
+        {
+            "id": "2229_e4",
+            "source_id": "2229_n_a4",
+            "target_id": "2229_n_s1"
+        }
+    ],
+    "metadata": {
+        "core": {
+            "analyst_email": "connor.ness@outlook.com",
+            "analyst_name": "Connor Ness",
+            "created": "2021-06-26T14:05:20",
+            "description": " ",
+            "edited": "2021-06-26T14:05:20",
+            "id": "2021-06-26-14-05-20-cat2229",
+            "notes": " ",
+            "title": "cat2229",
+            "version": "0.1"
+        }
+    },
+    "nodes": [
+        {
+            "id": "2229_n_a1",
+            "metadata": {},
+            "sources": [],
+            "text": "Cats make good pets",
+            "type": "atom"
+        },
+        {
+            "id": "2229_n_s1",
+            "metadata": {},
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "2229_n_a2",
+            "metadata": {},
+            "sources": [],
+            "text": "they are affectionate",
+            "type": "atom"
+        },
+        {
+            "id": "2229_n_a3",
+            "metadata": {},
+            "sources": [],
+            "text": "They are clean",
+            "type": "atom"
+        },
+        {
+            "id": "2229_n_a4",
+            "metadata": {},
+            "sources": [],
+            "text": "they are entertaining",
+            "type": "atom"
+        }
+    ]
+}

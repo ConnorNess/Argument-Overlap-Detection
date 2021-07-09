@@ -1,0 +1,207 @@
+{
+    "edges": [
+        {
+            "id": "12099_e1",
+            "source_id": "12099_n_s1",
+            "target_id": "12099_n_a1"
+        },
+        {
+            "id": "12099_e2",
+            "source_id": "12099_n_a2",
+            "target_id": "12099_n_s1"
+        },
+        {
+            "id": "12099_e3",
+            "source_id": "12099_n_s2",
+            "target_id": "12099_n_a2"
+        },
+        {
+            "id": "12099_e4",
+            "source_id": "12099_n_a3",
+            "target_id": "12099_n_s2"
+        },
+        {
+            "id": "12099_e5",
+            "source_id": "12099_n_a4",
+            "target_id": "12099_n_s2"
+        },
+        {
+            "id": "12099_e6",
+            "source_id": "12099_n_a5",
+            "target_id": "12099_n_s2"
+        },
+        {
+            "id": "12099_e7",
+            "source_id": "12099_n_a6",
+            "target_id": "12099_n_s2"
+        },
+        {
+            "id": "12099_e8",
+            "source_id": "12099_n_a7",
+            "target_id": "12099_n_s2"
+        },
+        {
+            "id": "12099_e9",
+            "source_id": "12099_n_a8",
+            "target_id": "12099_n_s2"
+        },
+        {
+            "id": "12099_e10",
+            "source_id": "12099_n_s3",
+            "target_id": "12099_n_a8"
+        },
+        {
+            "id": "12099_e11",
+            "source_id": "12099_n_a9",
+            "target_id": "12099_n_s3"
+        },
+        {
+            "id": "12099_e12",
+            "source_id": "12099_n_a10",
+            "target_id": "12099_n_s2"
+        },
+        {
+            "id": "12099_e13",
+            "source_id": "12099_n_a11",
+            "target_id": "12099_n_s2"
+        },
+        {
+            "id": "12099_e14",
+            "source_id": "12099_n_a12",
+            "target_id": "12099_n_s2"
+        },
+        {
+            "id": "12099_e15",
+            "source_id": "12099_n_a13",
+            "target_id": "12099_n_s2"
+        }
+    ],
+    "metadata": {
+        "core": {
+            "analyst_email": "connor.ness@outlook.com",
+            "analyst_name": "Connor Ness",
+            "created": "2021-06-28 15:24:23.695317",
+            "description": "why cats are good",
+            "edited": "2021-06-28 15:24:23.695317",
+            "id": "2021-06-28 15:24:23.695317-cats12099",
+            "notes": "",
+            "title": "cats and programmers",
+            "version": "0.1"
+        }
+    },
+    "nodes": [
+        {
+            "id": "12099_n_a1",
+            "metadata": {},
+            "sources": [],
+            "text": "Some programmers are obsessed with cats",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_s1",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12099_n_a2",
+            "metadata": {},
+            "sources": [],
+            "text": "Cats have the greatest compromise between being human-like and low maintenance",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_s2",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12099_n_a3",
+            "metadata": {},
+            "sources": [],
+            "text": "They feel like companions when they need to feel like companions",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_a4",
+            "metadata": {},
+            "sources": [],
+            "text": "they take care of themselves most of the time",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_a5",
+            "metadata": {},
+            "sources": [],
+            "text": "They don't make noise",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_a6",
+            "metadata": {},
+            "sources": [],
+            "text": "They are perfect meditation buddies when you're coding and they're silently looking at your keypresses a couple inches over",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_a7",
+            "metadata": {},
+            "sources": [],
+            "text": "Sometimes a problem just needs to be talked through with yourself to come up with a solution because silent thinking doesn't help, and they're perfect listeners",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_a8",
+            "metadata": {},
+            "sources": [],
+            "text": "you only need to clean up after them and replace their sustenance once per day",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_s3",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12099_n_a9",
+            "metadata": {},
+            "sources": [],
+            "text": "They're extremely clean",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_a10",
+            "metadata": {},
+            "sources": [],
+            "text": "They'll come comfort you when you're sad",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_a11",
+            "metadata": {},
+            "sources": [],
+            "text": "they'll play when you want to play (mostly)",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_a12",
+            "metadata": {},
+            "sources": [],
+            "text": "They won't bother you when you don't want to be bothered",
+            "type": "atom"
+        },
+        {
+            "id": "12099_n_a13",
+            "metadata": {},
+            "sources": [],
+            "text": "They'll even get you rid of most production-choking pests like mosquitos and flies",
+            "type": "atom"
+        }
+
+    ]
+}

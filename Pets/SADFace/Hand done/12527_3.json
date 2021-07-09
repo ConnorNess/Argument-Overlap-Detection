@@ -1,0 +1,86 @@
+{
+    "edges": [
+        {
+            "id": "12527_3_e1",
+            "source_id": "12527_3_s1",
+            "target_id": "12527_3_a1"
+        },
+        {
+            "id": "12527_3_e2",
+            "source_id": "12527_3_s2",
+            "target_id": "12527_3_a1"
+        },
+        {
+            "id": "12527_3_e3",
+            "source_id": "12527_3_a3",
+            "target_id": "12527_3_s1"
+        },
+        {
+            "id": "12527_3_e2",
+            "source_id": "12527_3_a4",
+            "target_id": "12527_3_s1"
+        },
+        {
+            "id": "12527_3_e2",
+            "source_id": "12527_3_a2",
+            "target_id": "12527_3_s2"
+        }
+    ],
+    "metadata": {
+        "core": {
+            "analyst_email": "connor.ness@outlook.com",
+            "analyst_name": "Connor Ness",
+            "created": "2021-06-20T13:56:22",
+            "description": "Base Document for overlap detection",
+            "edited": "2021-06-20T13:56:22",
+            "id": "2021-06-20-13-56-22-b45e",
+            "notes": "",
+            "title": "",
+            "version": "0.1"
+        }
+    },
+    "nodes": [
+        {
+            "id": "12527_3_n_a1",
+            "metadata": {},
+            "sources": [],
+            "text": "a dog costs taxes and will be more expensive than a cat",
+            "type": "atom"
+        },
+        {
+            "id": "12527_3_n_s1",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_3_n_s2",
+            "metadata": {},
+            "sources": [],
+            "name": "conflict",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_3_n_a2",
+            "metadata": {},
+            "sources": [],
+            "text": "next to the taxes you will need equipment like a dog lead, anti-flea-spray, and so on",
+            "type": "atom"
+        },
+        {
+            "id": "12527_3_n_a3",
+            "metadata": {},
+            "sources": [],
+            "text": "the equipment for running costs of cats and dogs are nearly the same",
+            "type": "atom"
+        },
+        {
+            "id": "12527_3_n_a4",
+            "metadata": {},
+            "sources": [],
+            "text": "in Germany you have to pay for your second dog even more taxes!",
+            "type": "atom"
+        }
+    ]
+}

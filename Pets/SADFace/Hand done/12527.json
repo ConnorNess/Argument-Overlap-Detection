@@ -1,0 +1,178 @@
+{
+    "edges": [
+        {
+            "id": "12527_e1",
+            "source_id": "12527_n_s1",
+            "target_id": "12527_n_a1"
+        },
+        {
+            "id": "12527_e2",
+            "source_id": "12527_n_a2",
+            "target_id": "12527_n_s1"
+        },
+        {
+            "id": "12527_e3",
+            "source_id": "12527_n_s3",
+            "target_id": "12527_n_a2"
+        },
+        
+        {
+            "id": "12527_e4",
+            "source_id": "12527_n_a3",
+            "target_id": "12527_n_s3"
+        },
+        {
+            "id": "12527_e5",
+            "source_id": "12527_n_a4",
+            "target_id": "12527_n_s2"
+        },
+        {
+            "id": "12527_e6",
+            "source_id": "12527_n_a5",
+            "target_id": "12527_n_s1"
+        },
+        {
+            "id": "12527_e7",
+            "source_id": "12527_n_s4",
+            "target_id": "12527_n_a5"
+        },
+        {
+            "id": "12527_e8",
+            "source_id": "12527_n_a6",
+            "target_id": "12527_n_s4"
+        },
+        {
+            "id": "12527_e9",
+            "source_id": "12527_n_a7",
+            "target_id": "12527_n_s1"
+        },
+        {
+            "id": "12527_e10",
+            "source_id": "12527_n_a8",
+            "target_id": "12527_n_s1"
+        },
+        {
+            "id": "12527_e11",
+            "source_id": "12527_n_s5",
+            "target_id": "12527_n_a4"
+        },
+        {
+            "id": "12527_e12",
+            "source_id": "12527_n_a9",
+            "target_id": "12527_n_s5"
+        }
+    ],
+    "metadata": {
+        "core": {
+            "analyst_email": "connor.ness@outlook.com",
+            "analyst_name": "Connor Ness",
+            "created": "2021-06-20T13:56:22",
+            "description": "Base Document for overlap detection",
+            "edited": "2021-06-20T13:56:22",
+            "id": "2021-06-20-13-56-22-b45e",
+            "notes": "Used to convert from AIF",
+            "title": "Base",
+            "version": "0.1"
+        }
+    },
+    "nodes": [
+        {
+            "id": "12527_n_a1",
+            "metadata": {},
+            "sources": [],
+            "text": "we should get a cat",
+            "type": "atom"
+        },
+        {
+            "id": "12527_n_s1",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_n_s2",
+            "metadata": {},
+            "sources": [],
+            "name": "conflict",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_n_a2",
+            "metadata": {},
+            "sources": [],
+            "text": "cats are very independent",
+            "type": "atom"
+        },
+        {
+            "id": "12527_n_s3",
+            "metadata": {},
+            "sources": [],
+            "name": "conflict",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_n_a3",
+            "metadata": {},
+            "sources": [],
+            "text": "the purpose of a pet is to have something to take care of",
+            "type": "atom"
+        },
+        {
+            "id": "12527_n_a4",
+            "metadata": {},
+            "sources": [],
+            "text": "cats are capricious",
+            "type": "atom"
+        },
+        {
+            "id": "12527_n_s5",
+            "metadata": {},
+            "sources": [],
+            "name": "conflict",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_n_a9",
+            "metadata": {},
+            "sources": [],
+            "text": "this is based on the cats race and a little bit on the breeding",
+            "type": "atom"
+        },
+        {
+            "id": "12527_n_a5",
+            "metadata": {},
+            "sources": [],
+            "text": "a dog costs taxes and will be more expensive than a cat",
+            "type": "atom"
+        },
+        {
+            "id": "12527_n_s4",
+            "metadata": {},
+            "sources": [],
+            "name": "conflict",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_n_a6",
+            "metadata": {},
+            "sources": [],
+            "text": "this is just a claim without any justification",
+            "type": "atom"
+        },
+        {
+            "id": "12527_n_a7",
+            "metadata": {},
+            "sources": [],
+            "text": "cats are small",
+            "type": "atom"
+        },
+        {
+            "id": "12527_n_a8",
+            "metadata": {},
+            "sources": [],
+            "text": "cats are fluffy",
+            "type": "atom"
+        }
+    ]
+}

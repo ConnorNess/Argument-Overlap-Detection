@@ -1,0 +1,110 @@
+{
+    "edges": [
+        {
+            "id": "12527_4_e1",
+            "source_id": "12527_n_s1",
+            "target_id": "12527_n_a1"
+        },
+        {
+            "id": "12527_4_e2",
+            "source_id": "12527_n_s1",
+            "target_id": "12527_n_a2"
+        },
+        {
+            "id": "12527_4_e3",
+            "source_id": "12527_n_s2",
+            "target_id": "12527_n_a2"
+        },
+        {
+            "id": "12527_4_e4",
+            "source_id": "12527_n_s3",
+            "target_id": "12527_n_a2"
+        },
+        {
+            "id": "12527_4_e5",
+            "source_id": "12527_n_a3",
+            "target_id": "12527_n_s1"
+        },
+        {
+            "id": "12527_4_e6",
+            "source_id": "12527_n_a4",
+            "target_id": "12527_n_s2"
+        },
+        {
+            "id": "12527_4_e7",
+            "source_id": "12527_n_a5",
+            "target_id": "12527_n_s3"
+        }
+    ],
+    "metadata": {
+        "core": {
+            "analyst_email": "connor.ness@outlook.com",
+            "analyst_name": "Connor Ness",
+            "created": "2021-06-30 17:39:17.725754",
+            "description": "",
+            "edited": "2021-06-30 17:39:17.725754",
+            "id": "12527_4",
+            "notes": "",
+            "title": "12527_4",
+            "version": "0.1"
+        }
+    },
+    "nodes": [
+        {
+            "id": "12527_4_n_a1",
+            "metadata": {},
+            "sources": [],
+            "text": "cats are small",
+            "type": "atom"
+        },
+        {
+            "id": "12527_4_n_a2",
+            "metadata": {},
+            "sources": [],
+            "text": "cats are fluffy",
+            "type": "atom"
+        },
+        {
+            "id": "12527_4_n_s1",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_4_n_s2",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_4_n_s3",
+            "metadata": {},
+            "sources": [],
+            "name": "conflict",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_4_n_a3",
+            "metadata": {},
+            "sources": [],
+            "text": "it is important, that pets are small and fluffy!",
+            "type": "atom"
+        },
+        {
+            "id": "12527_4_n_a4",
+            "metadata": {},
+            "sources": [],
+            "text": "cats are little, sweet and innocent cuddle toys",
+            "type": "atom"
+        },
+        {
+            "id": "12527_4_n_a5",
+            "metadata": {},
+            "sources": [],
+            "text": "ever seen a sphinx cat or savannah cats?",
+            "type": "atom"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{"nodes":[
+    {"nodeID":"47663","text":"Cats make good pets","type":"I","timestamp":"2015-02-05 09:01:50"},
+    {"nodeID":"47665","text":"they are affectionate","type":"I","timestamp":"2015-02-05 10:22:38"},
+    {"nodeID":"47666","text":"RA","type":"RA","timestamp":"2015-02-05 10:22:38"},
+    {"nodeID":"47667","text":"They are clean","type":"I","timestamp":"2015-02-05 10:22:38"},
+    {"nodeID":"47668","text":"they are entertaining","type":"I","timestamp":"2015-02-05 10:22:38"}],
+"edges":[
+    {"edgeID":"64930","fromID":"47665","toID":"47666","formEdgeID":null},
+    {"edgeID":"64931","fromID":"47666","toID":"47663","formEdgeID":null},
+    {"edgeID":"64932","fromID":"47667","toID":"47666","formEdgeID":null},
+    {"edgeID":"64933","fromID":"47668","toID":"47666","formEdgeID":null}],
+"locutions":[]}

@@ -1,0 +1,110 @@
+{
+    "edges": [
+        {
+            "id": "12527_both_e1",
+            "source_id": "12527_both_n_s1",
+            "target_id": "12527_both_n_a1"
+        },
+        {
+            "id": "12527_both_e2",
+            "source_id": "12527_both_n_a2",
+            "target_id": "12527_both_n_s1"
+        },
+        {
+            "id": "12527_both_e3",
+            "source_id": "12527_both_n_s2",
+            "target_id": "12527_both_n_s1"
+        },
+        {
+            "id": "12527_both_e2",
+            "source_id": "12527_both_n_s3",
+            "target_id": "12527_both_n_a2"
+        },
+        {
+            "id": "12527_both_e2",
+            "source_id": "12527_both_n_a5",
+            "target_id": "12527_both_n_s3"
+        },
+        {
+            "id": "12527_both_e2",
+            "source_id": "12527_both_n_a3",
+            "target_id": "12527_both_n_s2"
+        },
+        {
+            "id": "12527_both_e2",
+            "source_id": "12527_both_n_a4",
+            "target_id": "12527_both_n_s2"
+        }
+    ],
+    "metadata": {
+        "core": {
+            "analyst_email": "connor.ness@outlook.com",
+            "analyst_name": "Connor Ness",
+            "created": "2021-06-30 17:57:51.424073",
+            "description": "",
+            "edited": "2021-06-30 17:57:51.424073",
+            "id": "12527_both",
+            "notes": "",
+            "title": "12527_both",
+            "version": "0.1"
+        }
+    },
+    "nodes": [
+        {
+            "id": "12527_both_n_a1",
+            "metadata": {},
+            "sources": [],
+            "text": "we could get both, a cat and a dog",
+            "type": "atom"
+        },
+        {
+            "id": "12527_both_n_s1",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_both_n_a2",
+            "metadata": {},
+            "sources": [],
+            "text": "it would be no problem",
+            "type": "atom"
+        },
+        {
+            "id": "12527_both_n_s2",
+            "metadata": {},
+            "sources": [],
+            "name": "conflict",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_both_n_a3",
+            "metadata": {},
+            "sources": [],
+            "text": "a cat and a dog will generally not get along well",
+            "type": "atom"
+        },
+        {
+            "id": "12527_both_n_a4",
+            "metadata": {},
+            "sources": [],
+            "text": "won't be best friends",
+            "type": "atom"
+        },
+        {
+            "id": "12527_both_n_s3",
+            "metadata": {},
+            "sources": [],
+            "name": "conflict",
+            "type": "scheme"
+        },
+        {
+            "id": "12527_both_n_a5",
+            "metadata": {},
+            "sources": [],
+            "text": "we do not have enough money for two pets",
+            "type": "atom"
+        }
+    ]
+}

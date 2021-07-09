@@ -1,0 +1,122 @@
+{
+    "edges": [
+        {
+            "id": "self_2_e1",
+            "source_id": "self_2_n_s1",
+            "target_id": "self_2_n_a1"
+        },
+        {
+            "id": "self_2_e2",
+            "source_id": "self_2__n_s2",
+            "target_id": "self_2_n_a1"
+        },
+        {
+            "id": "self_2_e3",
+            "source_id": "self_2__n_a2",
+            "target_id": "self_2_n_s1"
+        },
+        {
+            "id": "self_2_e4",
+            "source_id": "self_2__n_a3",
+            "target_id": "self_2_n_s1"
+        },
+        {
+            "id": "self_2_e5",
+            "source_id": "self_2__n_a4",
+            "target_id": "self_2_n_s1"
+        },
+        {
+            "id": "self_2_e6",
+            "source_id": "self_2__n_a5",
+            "target_id": "self_2_n_s1"
+        },
+        {
+            "id": "self_2_e7",
+            "source_id": "self_2__n_a6",
+            "target_id": "self_2_n_s1"
+        },
+        {
+            "id": "self_2_e8",
+            "source_id": "self_2__n_a8",
+            "target_id": "self_2_n_s2"
+        }
+    ],
+    "metadata": {
+        "core": {
+            "analyst_email": "connor.ness@outlook.com",
+            "analyst_name": "Connor Ness",
+            "created": "2021-06-20T13:56:22",
+            "description": "",
+            "edited": "2021-06-20T13:56:22",
+            "id": "2021-06-20-13-56-22-b45e",
+            "notes": "",
+            "title": "",
+            "version": "0.1"
+        }
+    },
+    "nodes": [
+        {
+            "id": "self_2_n_a1",
+            "metadata": {},
+            "sources": [],
+            "text": "I think cats are good to own",
+            "type": "atom"
+        },
+        {
+            "id": "self_2_n_s1",
+            "metadata": {},
+            "sources": [],
+            "name": "support",
+            "type": "scheme"
+        },
+        {
+            "id": "self_2_n_a2",
+            "metadata": {},
+            "sources": [],
+            "text": "They are both soft and like being pet",
+            "type": "atom"
+        },
+        {
+            "id": "self_2_n_a3",
+            "metadata": {},
+            "sources": [],
+            "text": "They aren't dirty",
+            "type": "atom"
+        },
+        {
+            "id": "self_2_n_a4",
+            "metadata": {},
+            "sources": [],
+            "text": "They are loving",
+            "type": "atom"
+        },
+        {
+            "id": "self_2_n_a5",
+            "metadata": {},
+            "sources": [],
+            "text": "They are independant",
+            "type": "atom"
+        },
+        {
+            "id": "self_2_n_a6",
+            "metadata": {},
+            "sources": [],
+            "text": "They don't take up much space",
+            "type": "atom"
+        },
+        {
+            "id": "self_2_n_s2",
+            "metadata": {},
+            "sources": [],
+            "name": "conflict",
+            "type": "scheme"
+        },
+        {
+            "id": "self_2_n_a7",
+            "metadata": {},
+            "sources": [],
+            "text": "They change mood easily",
+            "type": "atom"
+        }
+    ]
+}
