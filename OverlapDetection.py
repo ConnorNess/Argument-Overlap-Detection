@@ -63,6 +63,13 @@ def levenshtein(token1, token2):
     
     return (distances[len(token1)][len(token2)])
 
+def hamming(token1, token2):
+    distance = 0
+    for char in range (len(token2)): #loop for the shortest word
+        if token1[char] != token2[char]:
+            distance += 1
+    distance += (len(token1) - len(token2)) #Add the remaining length of the input
+    return distance
 
 ################################################################################################################################
 #Build array of arguments
@@ -118,6 +125,7 @@ getSADFaces(arguments)
 
 #Arrays for each overlap for each algorithm
 levoverlaps = []
+hamoverlaps = []
 
 #For each atom in a SADFACE
 #Compare to each atom in all SADFaces
@@ -132,6 +140,17 @@ for a, b in itertools.combinations(arguments, 2):
         thislev.append(b[1])
         levoverlaps.append(thislev)
 
+    thisham = []
+    #hamming
+    if len(a) < len(b):
+        hamdist = hamming(b, a)
+    else:
+        hamdist = hamming(a, b)
+    if(hamdist <= 10): #Again, the vibes dictate
+        thisham.append(a[1])
+        thisham.append(b[1])
+        hamoverlaps.append(thisham)
+
     #hamming
         #if match add to hamming array
     #etc.
@@ -140,5 +159,5 @@ for a, b in itertools.combinations(arguments, 2):
 #for each algorithm array
 
 compareOverlaps(handoverlaps, levoverlaps)
-
+compareOverlaps(handoverlaps, hamoverlaps)
 #Total number of overlaps = every node in txt minus how many lines
