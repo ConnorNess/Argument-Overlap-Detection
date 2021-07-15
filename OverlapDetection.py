@@ -2,6 +2,7 @@ import os
 import re
 import json
 import itertools
+from math import floor
 import numpy as np
 
 #Read the hand detected overlaps file by line creating arrays of each line that contributes to an overlap
@@ -35,31 +36,31 @@ def compareOverlaps(handoverlaps, overlaps):
 def levenshtein(token1, token2):
     distances = np.zeros((len(token1) + 1, len(token2) + 1), dtype = int)
 
-    for char1 in range(len(token1) + 1):
-        distances[char1][0] = char1
+    for t1char in range(len(token1) + 1):
+        distances[t1char][0] = t1char
 
-    for char2 in range(len(token2) + 1):
-        distances[0][char2] = char2
+    for t2char in range(len(token2) + 1):
+        distances[0][t2char] = t2char
         
     a = 0
     b = 0
     c = 0
     
-    for char1 in range(1, len(token1) + 1):
-        for char2 in range(1, len(token2) + 1):
-            if (token1[char1-1] == token2[char2-1]):
-                distances[char1][char2] = distances[char1 - 1][char2 - 1]
+    for t1char in range(1, len(token1) + 1):
+        for t2char in range(1, len(token2) + 1):
+            if (token1[t1char-1] == token2[t2char-1]):
+                distances[t1char][t2char] = distances[t1char - 1][t2char - 1]
             else:
-                a = distances[char1][char2 - 1]
-                b = distances[char1 - 1][char2]
-                c = distances[char1 - 1][char2 - 1]
+                a = distances[t1char][t2char - 1]
+                b = distances[t1char - 1][t2char]
+                c = distances[t1char - 1][t2char - 1]
                 
                 if (a <= b and a <= c):
-                    distances[char1][char2] = a + 1
+                    distances[t1char][t2char] = a + 1
                 elif (b <= a and b <= c):
-                    distances[char1][char2] = b + 1
+                    distances[t1char][t2char] = b + 1
                 else:
-                    distances[char1][char2] = c + 1
+                    distances[t1char][t2char] = c + 1
     
     return (distances[len(token1)][len(token2)])
 
@@ -70,6 +71,37 @@ def hamming(token1, token2):
             distance += 1
     distance += (len(token1) - len(token2)) #Add the remaining length of the input
     return distance
+
+def jaro(token1, token2):
+    maxdist = floor(max(len(token1), len(token2)) /2) -1
+    match = 0
+    hash1 = [0] * len(token1)
+    hash2 = [0] * len(token2)
+
+    for t1char in range(len(token1)):
+        for t2char in range (max(0, t1char-maxdist), min(len(token2), t1char + maxdist+1)):
+
+            if(token1[t1char] == token2[t2char] and hash2[t2char] == 0):
+                hash1[t1char] = 1
+                hash2[t2char] = 1
+                match += 1
+                break
+    
+    if(match == 0):
+        return 0
+    transpositions = 0
+    point = 0
+
+    for t1char in range (len(token1)):
+        if(hash1[t1char]):
+            while(hash2[point] == 0):
+                point += 1
+            if(token1[t1char] != token2[point]):
+                point += 1
+                transpositions += 1
+    transpositions = floor(transpositions/2)
+
+    return( (match / len(token1)) + (match / len(token2)) + ((match - transpositions+1)/match) /3.0) 
 
 ################################################################################################################################
 #Build array of arguments
@@ -126,6 +158,7 @@ getSADFaces(arguments)
 #Arrays for each overlap for each algorithm
 levoverlaps = []
 hamoverlaps = []
+jarooverlaps = []
 
 #For each atom in a SADFACE
 #Compare to each atom in all SADFaces
@@ -151,8 +184,14 @@ for a, b in itertools.combinations(arguments, 2):
         thisham.append(b[1])
         hamoverlaps.append(thisham)
 
-    #hamming
-        #if match add to hamming array
+    thisjaro = []
+    #jaro
+    jarodist = jaro(a[0], b[0])
+    if (jarodist > 0.8): #Viiiiiiibes
+        thisjaro.append(a[1])
+        thisjaro.append(b[1])
+        jarooverlaps.append(thisjaro)
+
     #etc.
         #if match add to x array
 
@@ -160,4 +199,5 @@ for a, b in itertools.combinations(arguments, 2):
 
 compareOverlaps(handoverlaps, levoverlaps)
 compareOverlaps(handoverlaps, hamoverlaps)
+compareOverlaps(handoverlaps, jarooverlaps)
 #Total number of overlaps = every node in txt minus how many lines
