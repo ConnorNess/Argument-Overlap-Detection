@@ -19,16 +19,27 @@ import numpy as np
 
 def compareOverlaps(handoverlaps, overlaps):
     #Check against hand detected overlaps
+    falsematches = 0
+    matches = 0
 
     for links in handoverlaps: #each entry into the hand overlaps list
         for thisoverlap in overlaps: #each set of overlaps detected
-            matches = 0 #tracks if both detected overlap nodes are present
+            thismatch = 0 #tracks if both detected overlap nodes are present
             for handnodes in links: #each individual node in a list
                 if thisoverlap[0] in handnodes or thisoverlap[1] in handnodes: 
-                    matches += 1
+                    thismatch += 1
 
-            if (matches == 2):
-                print(thisoverlap)
+            if (thismatch == 2):
+                matches += 1
+
+            if (thismatch == 1):
+                falsematches += 1
+
+    print("matches :")
+    print(matches)
+    print("false matches : ")
+    print(falsematches)
+                
 
 ################################################################################################################################
 #ALGORITHMS HERE
@@ -179,7 +190,7 @@ for a, b in itertools.combinations(arguments, 2):
         hamdist = hamming(b, a)
     else:
         hamdist = hamming(a, b)
-    if(hamdist <= 10): #Again, the vibes dictate
+    if(hamdist >= 5): #Again, the vibes dictate
         thisham.append(a[1])
         thisham.append(b[1])
         hamoverlaps.append(thisham)
@@ -187,17 +198,29 @@ for a, b in itertools.combinations(arguments, 2):
     thisjaro = []
     #jaro
     jarodist = jaro(a[0], b[0])
-    if (jarodist > 0.8): #Viiiiiiibes
+    if (jarodist > 0.95): #Viiiiiiibes
         thisjaro.append(a[1])
         thisjaro.append(b[1])
         jarooverlaps.append(thisjaro)
 
-    #etc.
-        #if match add to x array
+
+# print("lev overlaps")
+# print (levoverlaps)
+
+# print("ham overlaps")
+# print(hamoverlaps)
+
+# print("jaro overlaps")
+# print(jarooverlaps)
 
 #for each algorithm array
-
+print("levenshtein")
 compareOverlaps(handoverlaps, levoverlaps)
+print("____________________________")
+print("hamming")
 compareOverlaps(handoverlaps, hamoverlaps)
+print("____________________________")
+print("jaro")
 compareOverlaps(handoverlaps, jarooverlaps)
+print("____________________________")
 #Total number of overlaps = every node in txt minus how many lines
