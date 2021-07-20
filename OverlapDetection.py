@@ -80,7 +80,7 @@ def hamming(token1, token2):
     for char in range (len(token2)): #loop for the shortest word
         if token1[char] != token2[char]:
             distance += 1
-    distance += (len(token1) - len(token2)) #Add the remaining length of the input
+    distance += (len(token2) - len(token1)) #Add the remaining length of the input
     return distance
 
 def jaro(token1, token2):
@@ -111,8 +111,10 @@ def jaro(token1, token2):
                 point += 1
                 transpositions += 1
     transpositions = floor(transpositions/2)
+    jaroratio = ((match / len(token1)) + (match / len(token2)) + ((match - transpositions+1)/match) /3.0)
+    print(jaroratio)
 
-    return( (match / len(token1)) + (match / len(token2)) + ((match - transpositions+1)/match) /3.0) 
+    return(jaroratio) 
 
 ################################################################################################################################
 #Build array of arguments
@@ -122,8 +124,8 @@ def getSADFaces(arguments):
     #Turn each json file into an array of strings holding the atoms + their ID
 
     domainpath = (os.path.dirname(os.path.realpath(__file__)) + "\\Pets\\SADFace\\Hand Done\\")
-    SADFaces = os.listdir(domainpath)
-    #SADFaces = ['2229.json', '2235.json'] #Used for testing quickly
+    #SADFaces = os.listdir(domainpath)
+    SADFaces = ['2229.json', '2235.json'] #Used for testing quickly
 
     for each in SADFaces:
             with open(domainpath + each) as SADFace:
@@ -180,17 +182,19 @@ for a, b in itertools.combinations(arguments, 2):
     #levenshtein
     levdist = levenshtein(a[0],b[0]) #0 = the text, 1 = the id
     if (levdist <= 5): #Ok, kinda have to just chose a random-ish number based on what the vibe is - testing will show whats better FOR THIS DATASET but something more algorithmic should replace just a flat integer value
+        #ignore that idiot, the acceptable distance will be done via testing, what they miss, what they hit, what they get wrong
         thislev.append(a[1])
         thislev.append(b[1])
         levoverlaps.append(thislev)
 
     thisham = []
     #hamming
-    if len(a) < len(b):
-        hamdist = hamming(b, a)
+    if len(a[0]) < len(b[0]):
+        hamdist = hamming(b[0], a[0])
     else:
-        hamdist = hamming(a, b)
-    if(hamdist >= 5): #Again, the vibes dictate
+        hamdist = hamming(a[0], b[0])
+    if(hamdist <= 5): #Again, the vibes dictate
+        #same as before, I am not a smart man
         thisham.append(a[1])
         thisham.append(b[1])
         hamoverlaps.append(thisham)
@@ -199,19 +203,10 @@ for a, b in itertools.combinations(arguments, 2):
     #jaro
     jarodist = jaro(a[0], b[0])
     if (jarodist > 0.95): #Viiiiiiibes
+        #remove these comments later like damn dude
         thisjaro.append(a[1])
         thisjaro.append(b[1])
         jarooverlaps.append(thisjaro)
-
-
-# print("lev overlaps")
-# print (levoverlaps)
-
-# print("ham overlaps")
-# print(hamoverlaps)
-
-# print("jaro overlaps")
-# print(jarooverlaps)
 
 #for each algorithm array
 print("levenshtein")
