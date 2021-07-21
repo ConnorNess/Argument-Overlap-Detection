@@ -18,27 +18,42 @@ import numpy as np
 #Compare detected overlaps to self detected overlaps
 
 def compareOverlaps(handoverlaps, overlaps):
-    #Check against hand detected overlaps
-    falsematches = 0
-    matches = 0
+    
+    matches = []
+    matches_count = 0
+    matches_missed = []
+    matches_missed_count = 0
+    matches_false = []
+    matches_false_count = 0
 
-    for links in handoverlaps: #each entry into the hand overlaps list
-        for thisoverlap in overlaps: #each set of overlaps detected
-            thismatch = 0 #tracks if both detected overlap nodes are present
-            for handnodes in links: #each individual node in a list
-                if thisoverlap[0] in handnodes or thisoverlap[1] in handnodes: 
-                    thismatch += 1
+    detected_overlaps = []
 
-            if (thismatch == 2):
-                matches += 1
+    for overlap in overlaps:
+        for handoverlap in handoverlaps:
 
-            if (thismatch == 1):
-                falsematches += 1
+            match = 0
 
-    print("matches :")
-    print(matches)
-    print("false matches : ")
-    print(falsematches)
+            if overlap[0] == handoverlap[0] or overlap[0] == handoverlap[1]:
+                match += 1
+            if overlap[1] == handoverlap[0] or overlap[1] == handoverlap[1]:
+                match += 1
+            if overlap[0] == overlap[1]: #this *should* never hit thanks to itertools but, better safe
+                match = 0
+
+            if match == 2:
+                break
+
+        
+        if match == 2:
+            matches.append(handoverlap)
+            matches_count += 1
+            detected_overlaps.append(handoverlap)
+        else:
+            matches_false.append(handoverlap)
+            matches_false_count += 1
+
+    print("matches : ", matches_count)
+    print("false matches : ", matches_false_count)
                 
 
 ################################################################################################################################
@@ -84,17 +99,21 @@ def hamming(token1, token2):
     return distance
 
 def jaro(token1, token2):
+    #something wrong here, returning a value greater than 1
     maxdist = floor(max(len(token1), len(token2)) /2) -1
     match = 0
-    hash1 = [0] * len(token1)
-    hash2 = [0] * len(token2)
+    chars_t1 = [0] * len(token1)
+    chars_t2 = [0] * len(token2)
+
+    if (token1 == token2):
+        return 1
 
     for t1char in range(len(token1)):
         for t2char in range (max(0, t1char-maxdist), min(len(token2), t1char + maxdist+1)):
 
-            if(token1[t1char] == token2[t2char] and hash2[t2char] == 0):
-                hash1[t1char] = 1
-                hash2[t2char] = 1
+            if(token1[t1char] == token2[t2char] and chars_t2[t2char] == 0):
+                chars_t1[t1char] = 1
+                chars_t2[t2char] = 1
                 match += 1
                 break
     
@@ -104,15 +123,14 @@ def jaro(token1, token2):
     point = 0
 
     for t1char in range (len(token1)):
-        if(hash1[t1char]):
-            while(hash2[point] == 0):
+        if(chars_t1[t1char]):
+            while(chars_t2[point] == 0):
                 point += 1
             if(token1[t1char] != token2[point]):
                 point += 1
                 transpositions += 1
     transpositions = floor(transpositions/2)
-    jaroratio = ((match / len(token1)) + (match / len(token2)) + ((match - transpositions+1)/match) /3.0)
-    print(jaroratio)
+    jaroratio = (match/ len(token1) + match / len(token2) + (match - transpositions + 1) / match)/ 3.0
 
     return(jaroratio) 
 
@@ -124,8 +142,8 @@ def getSADFaces(arguments):
     #Turn each json file into an array of strings holding the atoms + their ID
 
     domainpath = (os.path.dirname(os.path.realpath(__file__)) + "\\Pets\\SADFace\\Hand Done\\")
-    #SADFaces = os.listdir(domainpath)
-    SADFaces = ['2229.json', '2235.json'] #Used for testing quickly
+    SADFaces = os.listdir(domainpath)
+    #SADFaces = ['2229.json', '2235.json'] #Used for testing quickly
 
     for each in SADFaces:
             with open(domainpath + each) as SADFace:
@@ -176,13 +194,13 @@ jarooverlaps = []
 #For each atom in a SADFACE
 #Compare to each atom in all SADFaces
 #Using itertools combinations to easily compare all elements but only once, two for loops would double up
+combs = 0
 for a, b in itertools.combinations(arguments, 2):
-    
+    combs += 1
     thislev = []
     #levenshtein
     levdist = levenshtein(a[0],b[0]) #0 = the text, 1 = the id
-    if (levdist <= 5): #Ok, kinda have to just chose a random-ish number based on what the vibe is - testing will show whats better FOR THIS DATASET but something more algorithmic should replace just a flat integer value
-        #ignore that idiot, the acceptable distance will be done via testing, what they miss, what they hit, what they get wrong
+    if (levdist <= 1): #ACCEPTABLE OVERLAP HERE - gotten through testing
         thislev.append(a[1])
         thislev.append(b[1])
         levoverlaps.append(thislev)
@@ -193,17 +211,15 @@ for a, b in itertools.combinations(arguments, 2):
         hamdist = hamming(b[0], a[0])
     else:
         hamdist = hamming(a[0], b[0])
-    if(hamdist <= 5): #Again, the vibes dictate
-        #same as before, I am not a smart man
+    if(hamdist <= 5): #ACCEPTABLE OVERLAP HERE
         thisham.append(a[1])
         thisham.append(b[1])
         hamoverlaps.append(thisham)
 
     thisjaro = []
     #jaro
-    jarodist = jaro(a[0], b[0])
-    if (jarodist > 0.95): #Viiiiiiibes
-        #remove these comments later like damn dude
+    jaroratio = jaro(a[0], b[0])
+    if (jaroratio >= 0.95): #ACCEPTABLE OVERLAP HERE
         thisjaro.append(a[1])
         thisjaro.append(b[1])
         jarooverlaps.append(thisjaro)
