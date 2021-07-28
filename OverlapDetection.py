@@ -202,9 +202,7 @@ jarooverlaps = []
 #For each atom in a SADFACE
 #Compare to each atom in all SADFaces
 #Using itertools combinations to easily compare all elements but only once, two for loops would double up
-combs = 0
 for a, b in itertools.combinations(arguments, 2):
-    combs += 1
     thislev = []
     #levenshtein
     levdist = levenshtein(a[0],b[0]) #0 = the text, 1 = the id
@@ -232,17 +230,15 @@ for a, b in itertools.combinations(arguments, 2):
         thisjaro.append(b[1])
         jarooverlaps.append(thisjaro)
 
-#for each algorithm array
-print("levenshtein")
-compareOverlaps(handoverlaps, levoverlaps)
-print("____________________________")
-print("hamming")
-compareOverlaps(handoverlaps, hamoverlaps)
-print("____________________________")
-print("jaro")
-compareOverlaps(handoverlaps, jarooverlaps)
-print("____________________________")
-#Total number of overlaps = every node in txt minus how many lines
+# print("levenshtein")
+# compareOverlaps(handoverlaps, levoverlaps)
+# print("____________________________")
+# print("hamming")
+# compareOverlaps(handoverlaps, hamoverlaps)
+# print("____________________________")
+# print("jaro")
+# compareOverlaps(handoverlaps, jarooverlaps)
+# print("____________________________")
 
 
 multi_overlaps = []
