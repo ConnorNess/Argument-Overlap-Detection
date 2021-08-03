@@ -18,7 +18,7 @@ import numpy as np
 ################################################################################################################################
 #output data to textfile
 
-def output(multi_overlaps, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount):
+def output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecount, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount):
     currenttime = datetime.datetime.now()
     filename = str(currenttime.day) + str(currenttime.hour) + str(currenttime.minute) + str(currenttime.second) + '.txt'
 
@@ -31,6 +31,7 @@ def output(multi_overlaps, levoverlaps, levtrue, levtruecount, levfalse, levfals
         f.write('Detected by Levenshtein, Hamming, and Jaro:\n')
         for overlap in multi_overlaps:
             f.write(str(overlap) + '\n')
+        f.write('\nMultiple: \n' + str(multitruecount) + ' Detected correctly\n' + str(multifalsecount) + ' Detected incorrectly\n')
 
         f.write('\nDetected by Levenshtein:\n')
         for overlap in levoverlaps:
@@ -87,7 +88,7 @@ def compareOverlaps(handoverlaps, overlaps, correctoverlap, correctcount, incorr
             incorrectcount += 1
                 
     #TODO: return these variables correctly - python does byval not byref so figure that one out
-    print(correctcount)
+    return correctcount, incorrectcount
 
 ################################################################################################################################
 #ALGORITHMS HERE
@@ -260,24 +261,30 @@ levtrue = [] #For all correctly identified overlaps
 levtruecount = 0
 levfalse = [] #For all incorrecntly identified overlaps
 levfalsecount = 0
-compareOverlaps(handoverlaps, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount)
-print(levtruecount)
+levtruecount, levfalsecount = compareOverlaps(handoverlaps, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount)
 
 hamtrue = []
 hamtruecount = 0
 hamfalse = []
 hamfalsecount = 0
-compareOverlaps(handoverlaps, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount)
+hamtruecount, hamfalsecount = compareOverlaps(handoverlaps, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount)
 
 jarotrue = []
 jarotruecount = 0
 jarofalse = []
 jarofalsecount = 0
-compareOverlaps(handoverlaps, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount)
+jarotruecount, jarofalsecount = compareOverlaps(handoverlaps, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount)
 
 
-multi_overlaps_id = []
-multipleOverlaps(multi_overlaps_id, levoverlaps, hamoverlaps, jarooverlaps)
+multi_overlaps = []
+multipleOverlaps(multi_overlaps, levoverlaps, hamoverlaps, jarooverlaps)
+
+multitrue = []
+multitruecount = 0
+multifalse = []
+multifalsecount = 0
+multitruecount, multifalsecount = compareOverlaps(handoverlaps, multi_overlaps, multitrue, multitruecount, multifalse, multifalsecount)
+
 
 #Oops, all meaningful data! - this looks messy~~~~
-#output(multi_overlaps_id, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount)
+output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecount, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount)
