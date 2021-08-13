@@ -1,8 +1,8 @@
-# SADFace-Overlap-Detection
+# Argument-Overlap-Detection
 Detection of overlapping argument nodes in SADFace
 
 FOR GENERAL USE </br>
-Replace the domainpath variable within def getSADFaces to a directory consisting ONLY of SADFace JSON files. </br>
+Replace the domainpath variable within def getArguments to a directory consisting ONLY of JSON files. </br>
 All atom nodes and their IDs will be retireved and each will be compared to all other nodes through several algorithms </br>
 These algorithms will output their detected overlaps by ID </br>
  </br>
