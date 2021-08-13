@@ -211,31 +211,39 @@ def synonyms_antonyms(token1, token2):
 ################################################################################################################################
 #Build array of arguments
 
-def getSADFaces(arguments):
-    #Read in the atom nodes of the supplied SADFace json files
+def getArguments(arguments, type):
+    #Read in the atom nodes of the supplied AIF json files
     #Turn each json file into an array of strings holding the atoms + their ID
     
-    domainpath = (os.path.dirname(os.path.realpath(__file__)) + "\\Pets\\SADFace\\Hand Done\\")
-    #SADFaces = os.listdir(domainpath)
-    SADFaces = ['2229.json', '2235.json', 'self_1.json'] #Used for testing quickly
+    domainpath = (os.path.dirname(os.path.realpath(__file__)) + '\\Pets\\SADFace\\Hand done\\') #<-------- Change directory here
+    args = os.listdir(domainpath)
+    #args = ['2229.json', '2235.json', 'self_1.json'] #Used for testing quickly
     
 
-    for each in SADFaces:
-            with open(domainpath + each) as SADFace:
+    for each in args:
+            with open(domainpath + each) as arg:
 
-                data = json.load(SADFace) #JSON to dict
+                data = json.load(arg) #JSON to dict
                 nodes = data.get('nodes') #Dict to list
                 count = len(nodes) #How many nodes long is this json?
 
                 for i in range(count):
                     thisarg = [] #temp array to hold text and id, will append once filled
                     try:
-                        thisarg.append(data['nodes'][i]['text'])
-                        try:
-                            thisarg.append(data['nodes'][i]['id'])
-                            arguments.append(thisarg) #Only append an argument with both text and id
-                        except KeyError:
-                            print("no id") #uh oh, somethin wrong with the json
+                        if(type == 'SADFace'):
+                            thisarg.append(data['nodes'][i]['text'])
+                            try:
+                                thisarg.append(data['nodes'][i]['id'])
+                                arguments.append(thisarg) #Only append an argument with both text and id
+                            except KeyError:
+                                print("no id") #uh oh, somethin wrong with the json
+                        elif (type == 'AIF' and ((data['nodes'][i]['type']) == "I")): #Only information nodes please
+                            thisarg.append(data['nodes'][i]['text'])
+                            try:
+                                thisarg.append(data['nodes'][i]['nodeID'])
+                                arguments.append(thisarg) #Only append an argument with both text and id
+                            except KeyError:
+                                print("no id") #uh oh, somethin wrong with the json
                     except KeyError: #Means no text is present - its a scheme node likely
                         pass
 
@@ -260,7 +268,7 @@ handoverlaps = []
 getHandOverlaps(handoverlaps)
 #Build arrays of atoms for each SADFace
 arguments = []
-getSADFaces(arguments)
+getArguments(arguments, 'SADFace') #<-----------Change type here (AIF or SADFace)
 
 #Arrays for each overlap for each algorithm
 levoverlaps = [] #All detected overlaps for an algorithm
@@ -337,3 +345,4 @@ multitruecount, multifalsecount = compareOverlaps(handoverlaps, multi_overlaps, 
 #Oops, all meaningful data! - this looks messy~~~~
 output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecount, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount)
 build_json(multi_overlaps, arguments)
+print("done")
