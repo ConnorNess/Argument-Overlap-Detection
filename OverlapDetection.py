@@ -5,6 +5,9 @@ import itertools
 from math import floor
 import datetime
 import numpy as np
+import string
+import uuid
+import time
 
 #Read the hand detected overlaps file by line creating arrays of each line that contributes to an overlap
 #Read in the atom nodes of the supplied SADFace json files
@@ -18,7 +21,38 @@ import numpy as np
 ################################################################################################################################
 #output data to textfile
 
+def build_json(overlaps, arguments):
+    jsonoverlaps = []
+
+    for thisoverlap in overlaps:
+
+        overlap_id = str(uuid.uuid4())
+        overlaps = []
+        for thisnode in thisoverlap:
+            for each in arguments:
+                if thisnode == each[1]:
+                    overlaps.append(each)
+        
+        overlap = {
+            "overlap_id": overlap_id,
+            "node_id_1": overlaps[0][0],
+            "node_text_1": overlaps[0][1],
+            "node_id_2": overlaps[1][0],
+            "node_text_2": overlaps[1][1]
+        }
+        jsonoverlaps.append(overlap)
+
+    filepath = os.path.dirname(os.path.realpath(__file__)) + '\\output'
+    if not os.path.exists(filepath):
+        os.makedirs(filepath)
+    currenttime = datetime.datetime.now()
+    filename = str(currenttime.day) + str(currenttime.hour) + str(currenttime.minute) + str(currenttime.second) + '.json'
+
+    with open(os.path.join(filepath, filename), 'w') as f:
+        json.dump(jsonoverlaps, f)
+
 def output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecount, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount):
+    
     currenttime = datetime.datetime.now()
     filename = str(currenttime.day) + str(currenttime.hour) + str(currenttime.minute) + str(currenttime.second) + '.txt'
 
@@ -64,6 +98,7 @@ def multipleOverlaps(multi_overlaps, overlapsA, overlapsB, overlapsC):
 
 def compareOverlaps(handoverlaps, overlaps, correctoverlap, correctcount, incorrectoverlap, incorrectcount):
     
+
     for overlap in overlaps:
         for handoverlap in handoverlaps:
 
@@ -86,9 +121,9 @@ def compareOverlaps(handoverlaps, overlaps, correctoverlap, correctcount, incorr
         else:
             incorrectoverlap.append(overlap)
             incorrectcount += 1
-                
-    #TODO: return these variables correctly - python does byval not byref so figure that one out
+
     return correctcount, incorrectcount
+
 
 ################################################################################################################################
 #ALGORITHMS HERE
@@ -133,7 +168,6 @@ def hamming(token1, token2):
     return distance
 
 def jaro(token1, token2):
-    #something wrong here, returning a value greater than 1
     maxdist = floor(max(len(token1), len(token2)) /2) -1
     match = 0
     chars_t1 = [0] * len(token1)
@@ -168,16 +202,23 @@ def jaro(token1, token2):
 
     return(jaroratio) 
 
+def synonyms_antonyms(token1, token2):
+
+    
+
+    return(0)
+
 ################################################################################################################################
 #Build array of arguments
 
 def getSADFaces(arguments):
     #Read in the atom nodes of the supplied SADFace json files
     #Turn each json file into an array of strings holding the atoms + their ID
-
+    
     domainpath = (os.path.dirname(os.path.realpath(__file__)) + "\\Pets\\SADFace\\Hand Done\\")
-    SADFaces = os.listdir(domainpath)
-    #SADFaces = ['2229.json', '2235.json', 'self_1.json'] #Used for testing quickly
+    #SADFaces = os.listdir(domainpath)
+    SADFaces = ['2229.json', '2235.json', 'self_1.json'] #Used for testing quickly
+    
 
     for each in SADFaces:
             with open(domainpath + each) as SADFace:
@@ -203,6 +244,7 @@ def getSADFaces(arguments):
 
 def getHandOverlaps(handoverlaps):
     #Read the hand detected overlaps file by line creating arrays of each line that contributes to an overlap
+    
 
     handoverlapsfilepath = os.path.dirname(os.path.realpath(__file__)) + '\\Pets\\overlaps.txt'
     with open(handoverlapsfilepath) as handoverlapsfile:
@@ -225,13 +267,20 @@ levoverlaps = [] #All detected overlaps for an algorithm
 hamoverlaps = []
 jarooverlaps = []
 
+
 #For each atom in a SADFACE
 #Compare to each atom in all SADFaces
 #Using itertools combinations to easily compare all elements but only once, two for loops would double up
 for a, b in itertools.combinations(arguments, 2):
+
+    a_no_punctuation = a[0].translate(str.maketrans('', '', string.punctuation))
+    a_clean = a_no_punctuation.lower()
+    b_no_punctuation = b[0].translate(str.maketrans('', '', string.punctuation))
+    b_clean = b_no_punctuation.lower()
+
     thislev = []
     #levenshtein
-    levdist = levenshtein(a[0],b[0]) #0 = the text, 1 = the id
+    levdist = levenshtein(a_clean, b_clean) #0 = the text, 1 = the id
     if (levdist <= 10): #ACCEPTABLE OVERLAP HERE - gotten through testing
         thislev.append(a[1])
         thislev.append(b[1])
@@ -239,10 +288,10 @@ for a, b in itertools.combinations(arguments, 2):
 
     thisham = []
     #hamming
-    if len(a[0]) < len(b[0]):
-        hamdist = hamming(b[0], a[0])
+    if len(a_clean) < len(b_clean):
+        hamdist = hamming(b_clean, a_clean)
     else:
-        hamdist = hamming(a[0], b[0])
+        hamdist = hamming(a_clean, b_clean)
     if(hamdist <= 17): #ACCEPTABLE OVERLAP HERE
         thisham.append(a[1])
         thisham.append(b[1])
@@ -250,12 +299,11 @@ for a, b in itertools.combinations(arguments, 2):
 
     thisjaro = []
     #jaro
-    jaroratio = jaro(a[0], b[0])
-    if (jaroratio >= 0.75): #ACCEPTABLE OVERLAP HERE
+    jaroratio = jaro(a_clean, b_clean)
+    if (jaroratio >= 0.7): #ACCEPTABLE OVERLAP HERE
         thisjaro.append(a[1])
         thisjaro.append(b[1])
         jarooverlaps.append(thisjaro)
-
 
 levtrue = [] #For all correctly identified overlaps
 levtruecount = 0
@@ -288,3 +336,4 @@ multitruecount, multifalsecount = compareOverlaps(handoverlaps, multi_overlaps, 
 
 #Oops, all meaningful data! - this looks messy~~~~
 output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecount, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount)
+build_json(multi_overlaps, arguments)
