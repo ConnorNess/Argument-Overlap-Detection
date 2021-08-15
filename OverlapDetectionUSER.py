@@ -199,7 +199,7 @@ for a, b in itertools.combinations(arguments, 2):
     thislev = []
     #levenshtein
     levdist = levenshtein(a_clean, b_clean) #0 = the text, 1 = the id
-    if (levdist <= 10): #ACCEPTABLE OVERLAP HERE - gotten through testing
+    if (levdist <= 12): #ACCEPTABLE OVERLAP HERE - gotten through testing
         thislev.append(a[1])
         thislev.append(b[1])
         levoverlaps.append(thislev)
@@ -210,7 +210,7 @@ for a, b in itertools.combinations(arguments, 2):
         hamdist = hamming(b_clean, a_clean)
     else:
         hamdist = hamming(a_clean, b_clean)
-    if(hamdist <= 17): #ACCEPTABLE OVERLAP HERE
+    if(hamdist <= 13): #ACCEPTABLE OVERLAP HERE
         thisham.append(a[1])
         thisham.append(b[1])
         hamoverlaps.append(thisham)
@@ -218,7 +218,7 @@ for a, b in itertools.combinations(arguments, 2):
     thisjaro = []
     #jaro
     jaroratio = jaro(a_clean, b_clean)
-    if (jaroratio >= 0.7): #ACCEPTABLE OVERLAP HERE
+    if (jaroratio >= 0.71): #ACCEPTABLE OVERLAP HERE
         thisjaro.append(a[1])
         thisjaro.append(b[1])
         jarooverlaps.append(thisjaro)
