@@ -63,24 +63,40 @@ def output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecoun
     line_overlaps = 'Detected by Levenshtein, Hamming, and Jaro:'
     with open(os.path.join(filepath, filename), 'w') as f:
         f.write('Detected by Levenshtein, Hamming, and Jaro:\n')
-        for overlap in multi_overlaps:
+        f.write('\nCorrect Detection: ' + str(multitruecount) + '\n')
+        for overlap in multitrue:
             f.write(str(overlap) + '\n')
-        f.write('\nMultiple: \n' + str(multitruecount) + ' Detected correctly\n' + str(multifalsecount) + ' Detected incorrectly\n')
+        f.write('\nIncorrect Detection: ' + str(multifalsecount) + '\n')
+        for overlap in multifalse:
+            f.write(str(overlap) + '\n')
+        f.write('\n____________________\n\n')
 
         f.write('\nDetected by Levenshtein:\n')
-        for overlap in levoverlaps:
+        f.write('\nCorrect Detection: ' + str(levtruecount) + '\n')
+        for overlap in levtrue:
             f.write(str(overlap) + '\n')
-        f.write('\nLevenshtein: \n' + str(levtruecount) + ' Detected correctly\n' + str(levfalsecount) + ' Detected incorrectly\n')
+        f.write('\nIncorrect Detection: ' + str(levfalsecount) + '\n')
+        for overlap in levfalse:
+            f.write(str(overlap) + '\n')
+        f.write('\n____________________\n\n')
 
         f.write('\nDetected by Hamming:\n')
-        for overlap in hamoverlaps:
+        f.write('\nCorrect Detection: ' + str(hamtruecount) + '\n')
+        for overlap in hamtrue:
             f.write(str(overlap) + '\n')
-        f.write('\nHamming: \n' + str(hamtruecount) + ' Detected correctly\n' + str(hamfalsecount) + ' Detected incorrectly\n')
+        f.write('\nIncorrect Detection: ' + str(hamfalsecount) + '\n')
+        for overlap in hamfalse:
+            f.write(str(overlap) + '\n')
+        f.write('\n____________________\n\n')
 
         f.write('\nDetected by Jaro:\n')
-        for overlap in jarooverlaps:
+        f.write('\nCorrect Detection: ' + str(jarotruecount) + '\n')
+        for overlap in jarotrue:
             f.write(str(overlap) + '\n')
-        f.write('\nJaro: \n' + str(jarotruecount) + ' Detected correctly\n' + str(jarofalsecount) + ' Detected incorrectly\n')
+        f.write('\nIncorrect Detection: ' + str(jarofalsecount) + '\n')
+        for overlap in jarofalse:
+            f.write(str(overlap) + '\n')
+        f.write('\n____________________\n\n')
 
 ################################################################################################################################
 #If something is detected by all algorithms, might be worth noting what that is
@@ -211,11 +227,12 @@ def synonyms_antonyms(token1, token2):
 ################################################################################################################################
 #Build array of arguments
 
-def getArguments(arguments, type):
+def getArguments(arguments):
     #Read in the atom nodes of the supplied AIF json files
     #Turn each json file into an array of strings holding the atoms + their ID
     
     domainpath = (os.path.dirname(os.path.realpath(__file__)) + '\\Pets\\SADFace\\Hand done\\') #<-------- Change directory here
+    #domainpath = (os.path.dirname(os.path.realpath(__file__)) + '\\welfare\\this\\')
     args = os.listdir(domainpath)
     #args = ['2229.json', '2235.json', 'self_1.json'] #Used for testing quickly
     
@@ -230,22 +247,19 @@ def getArguments(arguments, type):
                 for i in range(count):
                     thisarg = [] #temp array to hold text and id, will append once filled
                     try:
-                        if(type == 'SADFace'):
-                            thisarg.append(data['nodes'][i]['text'])
+                        thisarg.append(data['nodes'][i]['text']) #Both SADFace and AIFdb's JSON output of AIF use 'text' under 'nodes', makes this a bit easier
+                        try:
+                            thisarg.append(data['nodes'][i]['id'])
+                            arguments.append(thisarg) #Only append an argument with both text and id
+                        except KeyError:
                             try:
-                                thisarg.append(data['nodes'][i]['id'])
-                                arguments.append(thisarg) #Only append an argument with both text and id
-                            except KeyError:
-                                print("no id") #uh oh, somethin wrong with the json
-                        elif (type == 'AIF' and ((data['nodes'][i]['type']) == "I")): #Only information nodes please
-                            thisarg.append(data['nodes'][i]['text'])
-                            try:
-                                thisarg.append(data['nodes'][i]['nodeID'])
-                                arguments.append(thisarg) #Only append an argument with both text and id
+                                if(data['nodes'][i]['type'] == "I"): #if this is AIF, we only want i-nodes
+                                    thisarg.append(data['nodes'][i]['nodeID']) 
+                                    arguments.append(thisarg) #Only append an argument with both text and id
                             except KeyError:
                                 print("no id") #uh oh, somethin wrong with the json
                     except KeyError: #Means no text is present - its a scheme node likely
-                        pass
+                        pass #If it ain't got text, we got no use for it
 
 ################################################################################################################################
 #Build array of self detected overlaps
@@ -268,7 +282,7 @@ handoverlaps = []
 getHandOverlaps(handoverlaps)
 #Build arrays of atoms for each SADFace
 arguments = []
-getArguments(arguments, 'SADFace') #<-----------Change type here (AIF or SADFace)
+getArguments(arguments) #<-----------Change type here (AIF or SADFace)
 
 #Arrays for each overlap for each algorithm
 levoverlaps = [] #All detected overlaps for an algorithm
