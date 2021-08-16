@@ -51,8 +51,7 @@ def build_json(overlaps, arguments):
     with open(os.path.join(filepath, filename), 'w') as f:
         json.dump(jsonoverlaps, f)
 
-def output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecount, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount):
-    
+def output(multitrue, multitruecount, multifalse, multifalsecount, levtrue, levtruecount, levfalse, levfalsecount, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarotrue, jarotruecount, jarofalse, jarofalsecount, jarowinklertrue, jarowinklertruecount, jarowinklerfalse, jarowinklerfalsecount, jaccardtrue, jaccardtruecount, jaccardfalse, jaccardfalsecount):
     currenttime = datetime.datetime.now()
     filename = str(currenttime.day) + str(currenttime.hour) + str(currenttime.minute) + str(currenttime.second) + '.txt'
 
@@ -60,9 +59,8 @@ def output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecoun
     if not os.path.exists(filepath):
         os.makedirs(filepath)
 
-    line_overlaps = 'Detected by Levenshtein, Hamming, and Jaro:'
     with open(os.path.join(filepath, filename), 'w') as f:
-        f.write('Detected by Levenshtein, Hamming, and Jaro:\n')
+        f.write('Detected by All:\n')
         f.write('\nCorrect Detection: ' + str(multitruecount) + '\n')
         for overlap in multitrue:
             f.write(str(overlap) + '\n')
@@ -98,15 +96,54 @@ def output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecoun
             f.write(str(overlap) + '\n')
         f.write('\n____________________\n\n')
 
+        f.write('\nDetected by Jaro-Winkler:\n')
+        f.write('\nCorrect Detection: ' + str(jarowinklertruecount) + '\n')
+        for overlap in jarowinklertrue:
+            f.write(str(overlap) + '\n')
+        f.write('\nIncorrect Detection: ' + str(jarowinklerfalsecount) + '\n')
+        for overlap in jarowinklerfalse:
+            f.write(str(overlap) + '\n')
+        f.write('\n____________________\n\n')
+
+        f.write('\nDetected by Jaccard:\n')
+        f.write('\nCorrect Detection: ' + str(jaccardtruecount) + '\n')
+        for overlap in jaccardtrue:
+            f.write(str(overlap) + '\n')
+        f.write('\nIncorrect Detection: ' + str(jaccardfalsecount) + '\n')
+        for overlap in jaccardfalse:
+            f.write(str(overlap) + '\n')
+        f.write('\n____________________\n\n')
+
 ################################################################################################################################
 #If something is detected by all algorithms, might be worth noting what that is
 
-def multipleOverlaps(multi_overlaps, overlapsA, overlapsB, overlapsC):
+def multipleOverlaps(multi_overlaps, levoverlaps, hamoverlaps, jarooverlaps, winkleroverlaps, jaccardoverlaps):
     
-    overlaps = itertools.product(overlapsA, overlapsB, overlapsC)
+    dup_multi = []
 
-    for a, b, c in overlaps:
-        if a == b == c:
+    editoverlaps = itertools.product(levoverlaps, hamoverlaps)
+    #Levenshtein and Hamming
+    for a, b in editoverlaps:
+        if a == b:
+            dup_multi.append(a)
+
+    ratiooverlaps = itertools.product(winkleroverlaps, jaccardoverlaps)
+    #Winkler, and Jaccard
+    for a, b in ratiooverlaps:
+        if a == b:
+            dup_multi.append(a)
+
+    edit_and_ratio = [] #Everything but jaro
+
+    #Get rid of duplicates
+    for each in dup_multi:
+        if each not in edit_and_ratio:
+            edit_and_ratio.append(each)
+
+    final_check = itertools.product(jarooverlaps, edit_and_ratio)
+    #Finally, Jaro as our safe guard
+    for a, b in final_check:
+        if a == b:
             multi_overlaps.append(a)
 
 ################################################################################################################################
@@ -214,27 +251,48 @@ def jaro(token1, token2):
                 point += 1
                 transpositions += 1
     transpositions = floor(transpositions/2)
-    jaroratio = (match/ len(token1) + match / len(token2) + (match - transpositions + 1) / match)/ 3.0
+    jaro_ratio = (match/ len(token1) + match / len(token2) + (match - transpositions + 1) / match)/ 3.0
 
-    return(jaroratio) 
+    return(jaro_ratio)
 
-def synonyms_antonyms(token1, token2):
+def jaro_winkler(s1, s2, jaro_ratio):
+    prefix = 0
 
+    for i in range(min(len(s1), len(s2))):
+        if (s1[i] == s2[i]) :
+            prefix += 1
+        else :
+            break
+
+    prefix = min(4, prefix) #Maximum 4 characters as indicated by the algorithms description
+    winkler = jaro_ratio
+    winkler += 0.1 * prefix * (1 - winkler)
     
+    return(winkler)
 
-    return(0)
+def jaccard(token1, token2):
+    token1chars = []
+    for char in token1:
+        token1chars.append(char)
+    
+    token2chars = []
+    for char in token2:
+        token2chars.append(char)
+
+    intersection = len(list(set(token1chars).intersection(token2chars))) #AnB
+    union = (len(set(token1chars)) + len(set(token2chars))) - intersection #AuB
+    jaccard_similarity = (float(intersection) / union) #AnB / AuB
+    return(jaccard_similarity)
 
 ################################################################################################################################
 #Build array of arguments
 
 def getArguments(arguments):
-    #Read in the atom nodes of the supplied AIF json files
+    #Read in the atom nodes of the supplied json files
     #Turn each json file into an array of strings holding the atoms + their ID
     
     domainpath = (os.path.dirname(os.path.realpath(__file__)) + '\\Pets\\SADFace\\Hand done\\') #<-------- Change directory here
-    #domainpath = (os.path.dirname(os.path.realpath(__file__)) + '\\welfare\\this\\')
     args = os.listdir(domainpath)
-    #args = ['2229.json', '2235.json', 'self_1.json'] #Used for testing quickly
     
 
     for each in args:
@@ -282,13 +340,14 @@ handoverlaps = []
 getHandOverlaps(handoverlaps)
 #Build arrays of atoms for each SADFace
 arguments = []
-getArguments(arguments) #<-----------Change type here (AIF or SADFace)
+getArguments(arguments)
 
 #Arrays for each overlap for each algorithm
 levoverlaps = [] #All detected overlaps for an algorithm
 hamoverlaps = []
 jarooverlaps = []
-
+jarowinkleroverlaps = []
+jaccardoverlaps = []
 
 #For each atom in a SADFACE
 #Compare to each atom in all SADFaces
@@ -320,12 +379,26 @@ for a, b in itertools.combinations(arguments, 2):
         hamoverlaps.append(thisham)
 
     thisjaro = []
-    #jaro
+    thisjaro_winkler = []
+    #jaro + jaro winkler
     jaroratio = jaro(a_clean, b_clean)
+    jaro_winkler_ratio = jaro_winkler(a_clean, b_clean, jaroratio)
     if (jaroratio >= 0.71): #ACCEPTABLE OVERLAP HERE
         thisjaro.append(a[1])
         thisjaro.append(b[1])
         jarooverlaps.append(thisjaro)
+    if (jaro_winkler_ratio >= 0.8): #ACCEPTABLE OVERLAP HERE
+        thisjaro_winkler.append(a[1])
+        thisjaro_winkler.append(b[1])
+        jarowinkleroverlaps.append(thisjaro_winkler)
+
+    thisjaccard = []
+    #jaccard
+    jaccard_index = jaccard(a_clean, b_clean)
+    if (jaccard_index >= 0.8): #ACCEPTABLE OVERLAP HERE
+        thisjaccard.append(a[1])
+        thisjaccard.append(b[1])
+        jaccardoverlaps.append(thisjaccard)
 
 levtrue = [] #For all correctly identified overlaps
 levtruecount = 0
@@ -345,9 +418,21 @@ jarofalse = []
 jarofalsecount = 0
 jarotruecount, jarofalsecount = compareOverlaps(handoverlaps, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount)
 
+jarowinklertrue = []
+jarowinklertruecount = 0
+jarowinklerfalse = []
+jarowinklerfalsecount = 0
+jarowinklertruecount, jarowinklerfalsecount = compareOverlaps(handoverlaps, jarowinkleroverlaps, jarowinklertrue, jarowinklertruecount, jarowinklerfalse, jarowinklerfalsecount)
+
+jaccardtrue = []
+jaccardtruecount = 0
+jaccardfalse = []
+jaccardfalsecount = 0
+jaccardtruecount, jaccardfalsecount = compareOverlaps(handoverlaps, jaccardoverlaps, jaccardtrue, jaccardtruecount, jaccardfalse, jaccardfalsecount)
+
 
 multi_overlaps = []
-multipleOverlaps(multi_overlaps, levoverlaps, hamoverlaps, jarooverlaps)
+multipleOverlaps(multi_overlaps, levoverlaps, hamoverlaps, jarooverlaps, jarowinkleroverlaps, jaccardoverlaps)
 
 multitrue = []
 multitruecount = 0
@@ -357,6 +442,6 @@ multitruecount, multifalsecount = compareOverlaps(handoverlaps, multi_overlaps, 
 
 
 #Oops, all meaningful data! - this looks messy~~~~
-output(multi_overlaps, multitrue, multitruecount, multifalse, multifalsecount, levoverlaps, levtrue, levtruecount, levfalse, levfalsecount, hamoverlaps, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarooverlaps, jarotrue, jarotruecount, jarofalse, jarofalsecount)
+output(multitrue, multitruecount, multifalse, multifalsecount, levtrue, levtruecount, levfalse, levfalsecount, hamtrue, hamtruecount, hamfalse, hamfalsecount, jarotrue, jarotruecount, jarofalse, jarofalsecount, jarowinklertrue, jarowinklertruecount, jarowinklerfalse, jarowinklerfalsecount, jaccardtrue, jaccardtruecount, jaccardfalse, jaccardfalsecount)
 build_json(multi_overlaps, arguments)
 print("done")
