@@ -10,3 +10,6 @@ FOR TESTING/DEVELOPMENT </br>
 Self detected overlaps are listed within a txt file to fill lists, each line within the txt file are the overlapping nodes. </br>
 The program will be run the same as general use. </br>
 After these algorithms have filled a list output, the lists are compared to hand detected overlaps with def compareOverlaps. </br>
+
+
+This work was done for the purpose of a dissertation for a Masters of Science in Computing @ Edinburgh Napier. Interested in what I do or are hiring? Send a message and I'll reply <3
