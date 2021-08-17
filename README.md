@@ -1,5 +1,5 @@
 # Argument-Overlap-Detection
-Detection of overlapping argument nodes in SADFace
+Detection of overlapping argument nodes in SADFace and AIFdb JSON
 
 FOR GENERAL USE </br>
 Replace the domainpath variable within def getArguments to a directory consisting ONLY of JSON files. </br>
